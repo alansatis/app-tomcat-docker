@@ -16,23 +16,28 @@ RUN wget https://tomcat.apache.org/tomcat-8.5-doc/appdev/sample/sample.war -P /o
 # Copy private encrypted key and certificate
 COPY private_encrypted.pem certificate.pem /tmp/
 
+# Definindo variáveis de ambiente para as senhas
+ARG PRIVATE_KEY_PASSWORD
+ENV PRIVATE_KEY_PASSWORD=${PRIVATE_KEY_PASSWORD}
+ARG KEYSTORE_PASSWORD
+ENV KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD}
+
 # Decrypt private key
-RUN openssl rsa -in /tmp/private_encrypted.pem -out /tmp/private.pem -passin pass:1234
+RUN openssl rsa -in /tmp/private_encrypted.pem -out /tmp/private.pem -passin pass:$PRIVATE_KEY_PASSWORD
 
 # Create keystore
-RUN openssl pkcs12 -export -in /tmp/certificate.pem -inkey /tmp/private.pem -out /opt/tomcat/conf/keystore.p12 -name tomcat -passout pass:1234
+RUN openssl pkcs12 -export -in /tmp/certificate.pem -inkey /tmp/private.pem -out /opt/tomcat/conf/keystore.p12 -name tomcat -passout pass:$KEYSTORE_PASSWORD
 
-# Configure server.xml to enable SSL/TLS
-RUN sed -i '/<Connector port="8443"/a \
-               keystoreFile="/opt/tomcat/conf/keystore.p12" \
-               keystoreType="PKCS12" \
-               keystorePass="1234" \
-               keyAlias="tomcat" \
-               keyPass="1234" \
-               SSLEnabled="true" \
-               scheme="https" \
-               secure="true" \
-               SSLProtocol="TLS"' /opt/tomcat/conf/server.xml
+# Copy the modified server.xml from local directory to container
+#COPY server.xml /opt/tomcat/conf/server.xml
+# Use sed to uncomment the SSL configuration block in server.xml and add SSL/TLS configuration for port 4041
+RUN sed -i "/<Service name=\"Catalina\">/a \
+               <Connector port=\"4041\" protocol=\"org.apache.coyote.http11.Http11NioProtocol\" \
+                          maxThreads=\"150\" SSLEnabled=\"true\" scheme=\"https\" secure=\"true\" clientAuth=\"false\" sslProtocol=\"TLS\" \
+                          keystoreFile=\"\/opt\/tomcat\/conf\/keystore.p12\" \
+                          keystoreType=\"PKCS12\" \
+                          keystorePass=\"${KEYSTORE_PASSWORD}\" \/>" /opt/tomcat/conf/server.xml
+
 
 # Remove temporary files
 RUN rm /tmp/private_encrypted.pem /tmp/private.pem /tmp/certificate.pem
