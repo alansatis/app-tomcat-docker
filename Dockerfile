@@ -28,7 +28,7 @@ RUN openssl rsa -in /tmp/private_encrypted.pem -out /tmp/private.pem -passin pas
 # Create keystore
 RUN openssl pkcs12 -export -in /tmp/certificate.pem -inkey /tmp/private.pem -out /opt/tomcat/conf/keystore.p12 -name tomcat -passout pass:$KEYSTORE_PASSWORD
 
-# Use sed to uncomment the SSL configuration block in server.xml and add SSL/TLS configuration for port 4041
+# Use sed to add SSL/TLS configuration for port 4041 in server.xml
 RUN sed -i "/<Service name=\"Catalina\">/a \
                <Connector port=\"4041\" protocol=\"org.apache.coyote.http11.Http11NioProtocol\" \
                           maxThreads=\"150\" SSLEnabled=\"true\" scheme=\"https\" secure=\"true\" clientAuth=\"false\" sslProtocol=\"TLS\" \
