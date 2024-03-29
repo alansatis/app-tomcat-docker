@@ -1,9 +1,8 @@
 FROM centos:7
 
 # Import GPG Keys and install necessary packages
-RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 \
-    && rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7-aarch64 \
-    && yum install -y java-1.8.0-openjdk wget ca-certificates
+RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7  \
+  && yum install -y java-1.8.0-openjdk wget ca-certificates
 
 # Install Tomcat 8.5
 RUN wget https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.100/bin/apache-tomcat-8.5.100.tar.gz \
