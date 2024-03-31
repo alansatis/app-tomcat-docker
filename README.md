@@ -1,4 +1,4 @@
-# xpand-it-challenges
+# xpand-it-challenge
 
 This project consists of a Docker container that runs a Tomcat server with SSL/TLS support. It exposes the Tomcat sample application through a secure connection on port 4041. <br>
 
