@@ -16,7 +16,7 @@ docker build \
 --build-arg KEYSTORE_PASSWORD=<your-keystore-password> \
 -t image-name .
 ```
-### Start the Docker Container
+## Start the Docker Container
 * Let's start the container and it will expose the container's port 4041 to the host's port 4041.
 ```
 docker run -d -p 4041:4041 image-name
