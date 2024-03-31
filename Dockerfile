@@ -14,7 +14,7 @@ RUN wget https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.100/bin/apache-tomcat-8.5
 RUN wget https://tomcat.apache.org/tomcat-8.5-doc/appdev/sample/sample.war -P /opt/tomcat/webapps/
 
 # Copy private encrypted key and certificate
-COPY private_encrypted.pem certificate.pem /tmp/
+COPY PEM-files/private_encrypted.pem PEM-files/certificate.pem /tmp/
 
 # Definindo variáveis de ambiente para as senhas
 ARG PRIVATE_KEY_PASSWORD
