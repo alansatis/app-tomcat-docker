@@ -2,7 +2,7 @@
 
 This project consists of a Docker container that runs a Tomcat server with SSL/TLS support. It exposes the Tomcat sample application through a secure connection on port 4041. <br>
 
-## Prerequisites
+## Requirements
 * Docker installed on your machine. You can get it [here](https://docs.docker.com/get-docker/).
 * To run this project you will need to have the passwords to decrypt private.pem and the password for keystore. They will be sent by email.
 
