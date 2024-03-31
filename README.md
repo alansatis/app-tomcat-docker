@@ -1,4 +1,4 @@
-# expand-it-challenges
+# xpand-it-challenges
 
 This project consists of a Docker container that runs a Tomcat server with SSL/TLS support. It exposes the Tomcat sample application through a secure connection on port 4041. <br>
 
@@ -21,5 +21,5 @@ docker build \
 ```
 docker run -d -p 4041:4041 image-name
 ```
-* Now we can access the Tomcat example application via SSL/TLS:
+* Now we can access the Tomcat example application via SSL/TLS:<br>
 Open a web browser and go to: ```https://localhost:4041/sample```
