@@ -27,5 +27,6 @@ docker build \
 docker run -d -p 4041:4041 web-app:v1
 ```
 * Now we can access the Tomcat example application via SSL/TLS:<br>
-> Important Note: As explained earlier regarding the self-signed certificate, security warnings will be displayed when accessing the URL. This is expected behavior since the certificate is self-signed and not issued by a trusted certificate authority.<br>
+> **Important Note:** As explained earlier regarding the self-signed certificate, security warnings will be displayed when accessing the URL. This is expected behavior since the certificate is self-signed and not issued by a trusted certificate authority. <br>
+
 Open a web browser and go to: <https://localhost:4041/sample>
